@@ -26,24 +26,12 @@ model.add(Dense(6, input_dim=4, activation='relu'))
 model.add(Dense(3, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-#fitting the model
 model.fit(X_train, Y_train, validation_data=(X_test, Y_test), epochs=200, batch_size=10)
 
-
-# In[6]:
-
-
-model.evaluate(X_test,Y_test)
+print(model.evaluate(X_test,Y_test))
 
 
-# In[7]:
-
-
-model.predict_classes(X_test)
-
-
-# In[8]:
-
+print(model.predict_classes(X_test))
 
 res=[]
 for point in Y_test:
@@ -53,16 +41,6 @@ for point in Y_test:
         res.append(1)
     elif point[0]==0 and point[1]==0 and point[2]==1:
         res.append(2)
-
-
-# In[9]:
-
-
-np.array([res])
-
-
-# In[ ]:
-
-
+print(np.array([res]))
 
 
