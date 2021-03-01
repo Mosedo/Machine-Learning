@@ -20,81 +20,41 @@ from sklearn import preprocessing
 from tensorflow.keras.utils import to_categorical
 
 
-# In[116]:
-
-
 df=pd.read_csv("diabetes.csv")
 
-
-# In[117]:
-
-
-df.head()
-
-
-# In[118]:
-
-
+#Get Columns we are interested in to represent our X values
 data=df[["Pregnancies","Glucose","BloodPressure","SkinThickness","Insulin","BMI","DiabetesPedigreeFunction","Age"]]
 
-
-# In[119]:
-
-
+#Preparation/ Normalization of the X values
 data=preprocessing.scale(data.values)
 
-
-# In[120]:
-
-
-data[0].shape
-
-
-# In[121]:
-
-
+#Y values one hot encoded
 labels=to_categorical(df["Outcome"].values)
 
-
-# In[122]:
-
-
+#Splitting the data
 x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.01)
 
-
-# In[123]:
-
-
+#Create Keras Model
 model=Sequential()
 model.add(Dense(units=10,input_dim=8,activation="relu"))
 model.add(Dense(units=100,activation="relu"))
 model.add(Dropout(0.2))
 model.add(Dense(units=100,activation="relu"))
 model.add(Dense(units=2,activation="softmax"))
+
+#Comile model
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
-
-# In[124]:
-
-
+#Trin the model
 history=model.fit(x_train,y_train,epochs=100,shuffle=True)
 
+#Evaluate the model on test data
+print(model.evaluate(x_train,y_train))
 
-# In[125]:
+#Predictions usind test data
+print(model.predict_classes(x_test))
 
-
-model.evaluate(x_train,y_train)
-
-
-# In[126]:
-
-
-model.predict_classes(x_test)
-
-
-# In[127]:
-
-
+#Improve readability of results i.e from [[0,1]] to 1 e.t.c
 res=[]
 for point in y_test:
     if point[0]==1 and point[1]==0:
@@ -102,16 +62,9 @@ for point in y_test:
     elif point[0]==0 and point[1]==1:
         res.append(1)
 
+print(np.array(res))
 
-# In[128]:
-
-
-np.array(res)
-
-
-# In[100]:
-
-
+#plotting the accuracy curve
 plt.plot(history.history["accuracy"])
 plt.title("Model Accuracy")
 plt.ylabel("Accuracy")
@@ -120,9 +73,7 @@ plt.legend(['Train','Test'], loc='upper left')
 plt.show()
 
 
-# In[101]:
-
-
+#plotting the loss curve
 plt.plot(history.history["loss"])
 #plt.plot(history.history["val_loss"])
 plt.title("Model Loss")
@@ -130,10 +81,3 @@ plt.ylabel("Loss")
 plt.xlabel("Epoch")
 plt.legend(['Train','Test'], loc='upper left')
 plt.show()
-
-
-# In[ ]:
-
-
-
-
