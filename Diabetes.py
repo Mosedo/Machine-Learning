@@ -3,6 +3,8 @@
 
 # In[102]:
 
+# 93% Validation Accuracy
+
 
 import pandas as pd
 import random
