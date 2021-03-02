@@ -39,10 +39,12 @@ x_train, x_test, y_train, y_test = train_test_split(data, labels, test_size=0.01
 #Create Keras Model
 model=Sequential()
 model.add(Dense(units=10,input_dim=8,activation="relu"))
-model.add(Dense(units=100,activation="relu"))
+model.add(Dense(units=500,activation="relu"))
 model.add(Dropout(0.2))
-model.add(Dense(units=100,activation="relu"))
+model.add(Dense(units=500,activation="relu"))
+model.add(Dropout(0.2))
 model.add(Dense(units=2,activation="softmax"))
+model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
 
 #Comile model
 model.compile(optimizer="adam", loss="categorical_crossentropy", metrics=["accuracy"])
