@@ -100,4 +100,4 @@ plt.show()
 from mlxtend.plotting import plot_confusion_matrix
 from sklearn.metrics import confusion_matrix
 mat=confusion_matrix(true_labels,prediction)
-plot_confusion_matrix(conf_mat=mat,figsize=(7,7))
+plot_confusion_matrix(conf_mat=mat,figsize=(7,7),class_names=["Legendary","Not Legendary"],cmap=plt.cm.Blues,hide_spines=True,hide_ticks=False)
