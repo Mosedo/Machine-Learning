@@ -102,10 +102,8 @@ nn=NeuralNetwork(2,1)
 # print(nn.train([0.8,0.6],[1]))
 
 for i in range(5000):
-    random.shuffle(training_data)
-    for data in training_data:
-        # print(nn.train(data["inputs"],data["targets"]))
-        print(nn.train(X,y))
+    #random.shuffle(training_data)
+    print(nn.train(X,y))
 
 print("***************************************")
 print(nn.feedFoward([1,0]))
