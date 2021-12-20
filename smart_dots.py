@@ -21,7 +21,7 @@ DARKGRAY = (40, 40, 40)
 
 # Mob properties
 MOB_SIZE = 32
-MAX_SPEED = 1
+MAX_SPEED = 2
 MAX_FORCE = 0.1
 APPROACH_RADIUS = 120
 
@@ -42,8 +42,7 @@ class Food:
         self.position=vec(random.randint(10,WIDTH-10),random.randint(10,HEIGHT-10))
         self.color=(0,255,255)
         self.index=index
-        # self.code=random.uniform(0.5,1)
-        self.code=0.8
+        self.code=random.uniform(0.5,1.0)
         self.removed=False
         self.size=4
     def draw(self):
@@ -54,8 +53,7 @@ class Poison:
         self.position=vec(random.randint(10,WIDTH-10),random.randint(10,HEIGHT-10))
         self.color=(255,0,0)
         self.index=index
-        # self.code=random.uniform(0,0.49)
-        self.code=0.1
+        self.code=random.uniform(0,0.49)
         self.size=4
         self.removed=False
     def draw(self):
@@ -193,7 +191,11 @@ class Agent:
                 if abs(self.nearby_food[0].position.x-self.position.x) < 3:
                     try:
 
-                        if self.brain.feedFoward(self.nearby_food[0].code)[0][0] >=0.5:
+                        pred=self.brain.feedFoward(self.nearby_food[0].code)[0][0]
+
+                        #print(pred)
+
+                        if pred >=0.5:
                             foods[self.nearby_food[0].index].removed=True
                             foods[self.nearby_food[0].index].color=(0,0,0)
                             foods[self.nearby_food[0].index].size=0
@@ -204,8 +206,8 @@ class Agent:
                             
                             if self.life < 100:
                                 self.life+=2
-                        else:
-                            self.not_food.append(1)
+                        # else:
+                        #     self.not_food.append(1)
                         
                     except IndexError:
                         pass
@@ -237,7 +239,7 @@ class Agent:
 
     
 
-agents=[Agent(i) for i in range(10)]
+agents=[Agent(i) for i in range(2)]
 
 def addMoreFood():
     for i in range(100):
